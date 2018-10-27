@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -44,16 +45,17 @@ public class Driving extends OpMode
         double rightFrontPower;
         double leftBackPower;
         double rightBackPower;
+
 //Drive, turning, and strafe//
         double drive = -gamepad1.left_stick_y;
         double turn = gamepad1.right_stick_x;
         double strafe = gamepad1.left_stick_x;
 //        double driveTurn = -gamepad1.left_stick_y + gamepad1.right_stick_x;
+
         leftFrontPower = Range.clip(drive + turn + strafe, -1.0, 1.0);
         rightFrontPower = Range.clip(drive - turn - strafe, -1.0, 1.0);
         leftBackPower = Range.clip(drive + turn - strafe, -1.0, 1.0);
         rightBackPower = Range.clip(drive - turn + strafe, -1.0, 1.0);
-
 
        /* while (drive ++ turn = true)  {
             rightBackDrive.setPower(0.2);
@@ -62,11 +64,11 @@ public class Driving extends OpMode
 //front right goes backwards, front left goes forwards, back right goes forwards, back left goes backwards. For strafe right//
 
         // not locking the wheels while turning
+
         if (gamepad1.right_stick_x >= 0.1 && gamepad1.left_stick_y <= -0.1) {
             rightFrontPower = -0.2;
             rightBackPower = -0.2;
         }
-
         else if(gamepad1.right_stick_x <=-0.1 && gamepad1.left_stick_y <= -0.1) {
             leftFrontPower = -0.2;
             leftBackPower = -0.2;
@@ -80,14 +82,25 @@ public class Driving extends OpMode
             rightBackPower = 0.3;
         }
 
+        else if (gamepad1.right_stick_x <= -0.1 && gamepad1.left_stick_y <= -0.1){
+            leftFrontPower = -0.2;
+            leftBackPower = -0.2;
+        }
+        else if (gamepad1.right_stick_x >=0.1 && gamepad1.left_stick_y <= -0.1) {
+            leftFrontPower = 0.3;
+            leftBackPower = 0.3;
+        }
+        else if (gamepad1.right_stick_x <= -0.1 && gamepad1.left_stick_y <= -0.1) {
+            rightFrontPower = 0.3;
+            rightBackPower = 0.3;
+        }
+
         else {
             rightFrontPower = rightFrontPower;
             rightBackPower = rightBackPower;
             leftFrontPower = leftFrontPower;
             leftBackPower = leftBackPower;
         }
-
-
 
 //Setting the power of the motor//
         leftFrontDrive.setPower(leftFrontPower);

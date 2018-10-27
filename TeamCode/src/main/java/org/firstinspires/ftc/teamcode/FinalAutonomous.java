@@ -63,10 +63,10 @@ public class FinalAutonomous extends LinearOpMode {
         leftBackDrive = hardwareMap.dcMotor.get("motorLeftBack");
         rightBackDrive = hardwareMap.dcMotor.get("motorRightBack");
 
-        //    leftFrontDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        //    rightFrontDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        //    leftBackDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        //    rightBackDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+         //   leftFrontDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+         //   rightFrontDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+         //   leftBackDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+         //   rightBackDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
 
         // Most robots need the motor on one side to be reversed to drive forward
 
@@ -92,10 +92,23 @@ public class FinalAutonomous extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-//what it does
-        DriveForwardTime(1, 2000);
+//what it does. MOVEMENT OF THE ROBOT!!!!
+//     NOTICE ME. SLEEP TIME IS DURATION OF ACTION
+
+        TurnRightTime(1, 50);
+        sleep (600);
+        TurnRight(0);
+        sleep(200);
+        DriveForwardTime(1, 50);
+        sleep(170);
         DriveForward(0);
+        sleep(1000);
+        StrafeRightTime(0.5,50);
+        sleep(875);
+        StrafeRight(0);
     }
+
+//Define things that do the things above
 
     double DriveForwardTime(double power, long time) throws InterruptedException {
         DriveForward(power);
@@ -103,10 +116,41 @@ public class FinalAutonomous extends LinearOpMode {
     return 0;
     }
 
+
+    double TurnRightTime (double power, long time) throws InterruptedException {
+        TurnRight (power);
+        Thread.sleep(time);
+    return 0;
+    }
+
+    double StrafeRightTime (double power, long time) throws InterruptedException {
+        StrafeRight(power);
+        Thread.sleep(time);
+    return 0;
+    }
+
+//Define the variables for the use above
+
     public void DriveForward(double power) {
         leftFrontDrive.setPower(power);
         leftBackDrive.setPower(power);
-        rightBackDrive.setPower(-power);
         rightFrontDrive.setPower(-power);
+        rightBackDrive.setPower(-power);
+
     }
+
+    public void TurnRight (double power) {
+        leftFrontDrive.setPower(power);
+        leftBackDrive.setPower(power);
+        rightFrontDrive.setPower(power);
+        rightBackDrive.setPower(power);
+    }
+
+    public void StrafeRight (double power) {
+        leftFrontDrive.setPower(power);
+        leftBackDrive.setPower(-power);
+        rightFrontDrive.setPower(power);
+        rightBackDrive.setPower(-power);
+    }
+
 }
