@@ -16,6 +16,7 @@ public class Driving extends OpMode
     private DcMotor rightFrontDrive = null;
     private DcMotor leftBackDrive = null;
     private DcMotor rightBackDrive = null;
+    private DcMotor liftMotor = null;
 
     @Override
     public void init()  {
@@ -24,11 +25,13 @@ public class Driving extends OpMode
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         leftBackDrive = hardwareMap.get (DcMotor.class, "left_back_drive");
         rightBackDrive = hardwareMap.get (DcMotor.class, "right_back_drive");
+        liftMotor = hardwareMap.get (DcMotor.class, "lift_motor");
 //Set the Direction for the motors to turn when the robot moves forward//
         leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
+        liftMotor.setDirection(DcMotor.Direction.FORWARD);
 //Tells drivers that robot is ready//
         telemetry.addData("status", "Initialized");
     }
@@ -45,15 +48,19 @@ public class Driving extends OpMode
         double rightFrontPower;
         double leftBackPower;
         double rightBackPower;
+        double liftPower;
 //Drive, turning, and strafe//
         double drive = -gamepad1.left_stick_y;
         double turn = gamepad1.right_stick_x;
         double strafe = gamepad1.left_stick_x;
+        double liftUp = gamepad1.right_trigger;
+        double liftDown = gamepad1.left_trigger;
 //        double driveTurn = -gamepad1.left_stick_y + gamepad1.right_stick_x;
         leftFrontPower = Range.clip(drive + turn + strafe, -1.0, 1.0);
         rightFrontPower = Range.clip(drive - turn - strafe, -1.0, 1.0);
         leftBackPower = Range.clip(drive + turn - strafe, -1.0, 1.0);
         rightBackPower = Range.clip(drive - turn + strafe, -1.0, 1.0);
+        liftPower = Range.clip(liftUp - liftDown, -1.0, 1.0);
 
 
        /* while (drive ++ turn = true)  {
@@ -86,6 +93,7 @@ public class Driving extends OpMode
             rightBackPower = rightBackPower;
             leftFrontPower = leftFrontPower;
             leftBackPower = leftBackPower;
+            liftPower = liftPower;
         }
 
 
@@ -95,6 +103,7 @@ public class Driving extends OpMode
         rightFrontDrive.setPower(rightFrontPower);
         leftBackDrive.setPower(leftBackPower);
         rightBackDrive.setPower(rightBackPower);
+        liftMotor.setPower(liftPower);
         telemetry.addData("status", "loop 2");
     }
     //Stop the robot//
