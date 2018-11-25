@@ -38,6 +38,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 
 /**
@@ -53,7 +54,8 @@ public class FinalAutonomous extends LinearOpMode {
     private DcMotor rightFrontDrive = null;
     private DcMotor leftBackDrive = null;
     private DcMotor rightBackDrive = null;
-
+    private DcMotor liftMotor = null;
+    private CRServo teamMarker = null;
 
 
     public void main() throws InterruptedException {
@@ -62,7 +64,8 @@ public class FinalAutonomous extends LinearOpMode {
         rightFrontDrive = hardwareMap.dcMotor.get("motorRightFront");
         leftBackDrive = hardwareMap.dcMotor.get("motorLeftBack");
         rightBackDrive = hardwareMap.dcMotor.get("motorRightBack");
-
+        liftMotor = hardwareMap.dcMotor.get("liftMotor");
+        teamMarker = hardwareMap.crservo.get("teamMarker");
         //    leftFrontDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
         //    rightFrontDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
         //    leftBackDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
@@ -86,12 +89,13 @@ public class FinalAutonomous extends LinearOpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+        teamMarker = hardwareMap.get (CRServo.class, "team_marker");
+        liftMotor = hardwareMap.get (DcMotor.class, "lift_motor");
 
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
-
 //what it does
         DriveForwardTime(1, 2000);
         DriveForward(0);
@@ -109,4 +113,7 @@ public class FinalAutonomous extends LinearOpMode {
         rightBackDrive.setPower(-power);
         rightFrontDrive.setPower(-power);
     }
-}
+public void LowerDown(double power) {
+        liftMotor.setPower(-power);
+    }}
+
