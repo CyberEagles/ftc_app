@@ -44,7 +44,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 /**
 Basic autonomous */
 
-@Autonomous(name="Final bnjvhyt5Autonomous")
+@Autonomous(name="Close to Depot")
 
 public class FinalAutonomous extends LinearOpMode {
 
@@ -85,10 +85,10 @@ public class FinalAutonomous extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
-        leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
-        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front");
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front");
+        leftBackDrive = hardwareMap.get(DcMotor.class, "left_back");
+        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back");
         teamMarker = hardwareMap.get (CRServo.class, "team_marker");
         liftMotor = hardwareMap.get (DcMotor.class, "lift_motor");
 
@@ -97,23 +97,61 @@ public class FinalAutonomous extends LinearOpMode {
         waitForStart();
         runtime.reset();
 //what it does
-        DriveForwardTime(1, 2000);
+        LowerDownTime (-1, 1800);
+        LowerDown (0);
+        sleep(500);
+        DriveForwardTime(-1,40);
         DriveForward(0);
+        sleep(1000);
+        StrafeRightTime(-1,300);
+        StrafeRight(0);
+        sleep (450);
+        RotateTime(-1, 1000);
+        DriveForwardTime(-1,1000);
+        // In Depot//
+        
+    }
+    double LowerDownTime (double power,long time) throws InterruptedException {
+        LowerDown(-power);
+        Thread.sleep(time);
+        return 0;
+    }
+    double RotateTime (double power, long time) throws InterruptedException {
+        Rotation(power);
+        Thread.sleep(time);
+        return 0;
     }
 
     double DriveForwardTime(double power, long time) throws InterruptedException {
         DriveForward(power);
         Thread.sleep(time);
-    return 0;
+        return 0;
     }
-
-    public void DriveForward(double power) {
+    double StrafeRightTime (double power, long time) throws InterruptedException {
+        StrafeRight(power);
+        Thread.sleep(time);
+        return 0;
+    }
+    public void LowerDown(double power) {
+        liftMotor.setPower(-power);
+    }
+   public void DriveForward(double power) {
         leftFrontDrive.setPower(power);
-        leftBackDrive.setPower(power);
-        rightBackDrive.setPower(-power);
+       leftBackDrive.setPower(-power);
+        rightBackDrive.setPower(power);
         rightFrontDrive.setPower(-power);
     }
-public void LowerDown(double power) {
-        liftMotor.setPower(-power);
-    }}
+    public void Rotation (double power){
+        leftFrontDrive.setPower(power);
+        leftBackDrive.setPower(power);
+        rightFrontDrive.setPower(power);
+        rightBackDrive.setPower(power);
+    }
+    public void StrafeRight (double power) {
+        leftFrontDrive.setPower(power);
+        leftBackDrive.setPower(-power);
+        rightBackDrive.setPower(-power);
+        rightFrontDrive.setPower(power);
+    }
+}
 
