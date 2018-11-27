@@ -21,8 +21,8 @@ public class Driving extends OpMode
     private DcMotor armBase = null;
     private DcMotor armPivot = null;
     private DcMotor intake = null;
-    public CRServo intakePivot = null;
-    public CRServo intakePivot2 = null;
+  //  public CRServo intakePivot = null;
+  //  public CRServo intakePivot2 = null;
 
     public final static double ZERO_POWER = 0.0;
     public final static double MIN_POWER = -1.0;
@@ -42,8 +42,9 @@ public class Driving extends OpMode
         liftMotor = hardwareMap.get (DcMotor.class, "lift_motor");
         armBase = hardwareMap.get (DcMotor.class, "arm_base");
         armPivot = hardwareMap.get (DcMotor.class, "arm_pivot");
-        intakePivot = hardwareMap.get (CRServo.class, "intake_servo");
-        intakePivot.setPower(ZERO_POWER);
+        //intakePivot = hardwareMap.get (CRServo.class, "intake_servo");
+        //intakePivot2 = hardwareMap.get(CRServo.class, "intake_servo2");
+      //  intakePivot.setPower(ZERO_POWER);
 
 //Set the Direction for the motors to turn when the robot moves forward//
         leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -130,7 +131,7 @@ public class Driving extends OpMode
 
         // Activating intake and lift//
         if (gamepad2.a)intake.setPower(1.0);
-        else intakePivot.setPower(0.0);
+       // else intakePivot.setPower(0.0);
         if (gamepad1.left_trigger>0)liftMotor.setPower(-1.0);
         else liftMotor.setPower (0.0);
         if (gamepad1.right_trigger>0)liftMotor.setPower(1.0);
@@ -149,8 +150,8 @@ public class Driving extends OpMode
         }
         else IntakePivotPower =ZERO_POWER;
         IntakePivotPower = Range.clip(IntakePivotPower, MIN_POWER, MAX_POWER);
-        intakePivot.setPower(IntakePivotPower);
-        intakePivot2.setPower(IntakePivotPower);
+       // intakePivot.setPower(IntakePivotPower);
+        //intakePivot2.setPower(IntakePivotPower);
 //Setting the power of the motor//
         leftFrontDrive.setPower(leftFrontPower);
         rightFrontDrive.setPower(rightFrontPower);
