@@ -65,7 +65,7 @@ public class FinalAutonomous extends LinearOpMode {
         leftBackDrive = hardwareMap.dcMotor.get("motorLeftBack");
         rightBackDrive = hardwareMap.dcMotor.get("motorRightBack");
         liftMotor = hardwareMap.dcMotor.get("liftMotor");
-        teamMarker = hardwareMap.crservo.get("teamMarker");
+        teamMarker = hardwareMap.crservo.get("team_marker");
         //    leftFrontDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
         //    rightFrontDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
         //    leftBackDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
@@ -89,7 +89,7 @@ public class FinalAutonomous extends LinearOpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back");
-        teamMarker = hardwareMap.get (CRServo.class, "team_marker");
+        teamMarker = hardwareMap.crservo.get ("team_marker");
         liftMotor = hardwareMap.get (DcMotor.class, "lift_motor");
 
 
@@ -97,7 +97,7 @@ public class FinalAutonomous extends LinearOpMode {
         waitForStart();
         runtime.reset();
 //what it does
-        LowerDownTime (-1, 1800);
+        LowerDownTime (-1, 1700);
         LowerDown (0);
         sleep(500);
         DriveForwardTime(-1,40);
@@ -107,9 +107,22 @@ public class FinalAutonomous extends LinearOpMode {
         StrafeRight(0);
         sleep (450);
         RotateTime(-1, 1000);
-        DriveForwardTime(-1,1000);
+        DriveForwardTime(-1,1500);
         // In Depot//
-        
+        DriveForwardTime(1,150);
+        DriveForward(0);
+        RotateTime(-1,500);
+        teamMarker.setPower(-1);
+        sleep(500);
+
+        MarkerDropTime(1, 500);
+        //Straighten out on wall
+        //StrafeRightTime(1,500);
+       // StrafeRight(0);
+        //DriveForwardTime(1,3000);
+        //DriveForward(0);
+
+
     }
     double LowerDownTime (double power,long time) throws InterruptedException {
         LowerDown(-power);
@@ -129,6 +142,11 @@ public class FinalAutonomous extends LinearOpMode {
     }
     double StrafeRightTime (double power, long time) throws InterruptedException {
         StrafeRight(power);
+        Thread.sleep(time);
+        return 0;
+    }
+    double MarkerDropTime (double power, long time) throws InterruptedException {
+        DropMarker(power);
         Thread.sleep(time);
         return 0;
     }
@@ -152,6 +170,9 @@ public class FinalAutonomous extends LinearOpMode {
         leftBackDrive.setPower(-power);
         rightBackDrive.setPower(-power);
         rightFrontDrive.setPower(power);
+    }
+    public void DropMarker (double power) {
+        teamMarker.setPower(-power);
     }
 }
 
