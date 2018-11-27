@@ -21,8 +21,8 @@ public class Driving extends OpMode
     private DcMotor armBase = null;
     private DcMotor armPivot = null;
     private DcMotor intake = null;
-  //  public CRServo intakePivot = null;
-  //  public CRServo intakePivot2 = null;
+  //  public CRServo intakePivot;
+  //  public CRServo intakePivot2;
 
     public final static double ZERO_POWER = 0.0;
     public final static double MIN_POWER = -1.0;
