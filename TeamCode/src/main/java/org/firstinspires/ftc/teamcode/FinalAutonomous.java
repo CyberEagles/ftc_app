@@ -39,6 +39,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
 /**
@@ -100,22 +101,44 @@ public class FinalAutonomous extends LinearOpMode {
         LowerDownTime (-1, 1700);
         LowerDown (0);
         sleep(500);
-        DriveForwardTime(-1,40);
+        DriveForwardTime(-1,50);
         DriveForward(0);
         sleep(1000);
         StrafeRightTime(-1,300);
         StrafeRight(0);
         sleep (450);
-        RotateTime(-1, 1000);
-        DriveForwardTime(-1,1500);
+        RotateTime(-1, 1200);
+        DriveForwardTime(-1,1700);
         // In Depot//
-        DriveForwardTime(1,150);
+        DriveForwardTime(1,200);
         DriveForward(0);
-        RotateTime(-1,500);
-        teamMarker.setPower(-1);
+        RotateTime(-1,1200);
         sleep(500);
+        teamMarker.setPower(0.4);
+        sleep(300);
+        StrafeRightTime(-1,500);
+        StrafeRight(0);
+        sleep(1000);
 
-        MarkerDropTime(1, 500);
+        RotateTime(-1,800);
+        Rotation(0);
+        sleep(500);
+        DriveForwardTime(-1, 300);
+        DriveForward(0);
+        RotateTime(1, 100);
+        Rotation(0);
+        DriveForwardTime(-1,400);
+        DriveForward(0);
+        ParkTime(1,500);
+        RotateTime(1,100);
+        DriveForwardTime(-1, 625);
+
+        /*
+        RotateTime(1, 100);
+        Rotation(0);
+        DriveForwardTime(-1,1100);
+*/
+//        MarkerDropTime(1, 500);
         //Straighten out on wall
         //StrafeRightTime(1,500);
        // StrafeRight(0);
@@ -123,6 +146,11 @@ public class FinalAutonomous extends LinearOpMode {
         //DriveForward(0);
 
 
+    }
+    double ParkTime (double power, long time) throws InterruptedException {
+        Park(power);
+        Thread.sleep(time);
+        return 0;
     }
     double LowerDownTime (double power,long time) throws InterruptedException {
         LowerDown(-power);
@@ -173,6 +201,13 @@ public class FinalAutonomous extends LinearOpMode {
     }
     public void DropMarker (double power) {
         teamMarker.setPower(-power);
+    }
+
+    public void Park (double power){
+        leftFrontDrive.setPower(0);
+        leftBackDrive.setPower(0);
+        rightFrontDrive.setPower(0);
+        rightBackDrive.setPower(0);
     }
 }
 
