@@ -18,8 +18,9 @@ public class Driving extends OpMode
     private DcMotor leftBackDrive = null;
     private DcMotor rightBackDrive = null;
     private DcMotor liftMotor = null;
-    private DcMotor armBase = null;
-    private DcMotor armPivot = null;
+    public DcMotor lowerArmMotor = null;
+    private DcMotor middleArmMotor = null;
+    private CRServo intake_flip = null;
     private DcMotor intake = null;
   //  public CRServo intakePivot;
   //  public CRServo intakePivot2;
@@ -29,7 +30,7 @@ public class Driving extends OpMode
     public final static double MAX_POWER = 1.0;
 
     final double INTAKE_PIVOT_SPEED = 1.0;
-            double IntakePivotPower = ZERO_POWER;
+            double IntakeFlipPower = ZERO_POWER;
 
 
     @Override
@@ -40,8 +41,10 @@ public class Driving extends OpMode
         leftBackDrive = hardwareMap.get (DcMotor.class, "left_back");
         rightBackDrive = hardwareMap.get (DcMotor.class, "right_back");
         liftMotor = hardwareMap.get (DcMotor.class, "lift_motor");
-        armBase = hardwareMap.get (DcMotor.class, "arm_base");
-        armPivot = hardwareMap.get (DcMotor.class, "arm_pivot");
+        lowerArmMotor = hardwareMap.get (DcMotor.class, "lower_arm");
+        middleArmMotor = hardwareMap.get (DcMotor.class, "middle_arm");
+        intake = hardwareMap.get(DcMotor.class, "intake_motor");
+        intake_flip = hardwareMap.crservo.get("intake_flip");
         //intakePivot = hardwareMap.get (CRServo.class, "intake_servo");
         //intakePivot2 = hardwareMap.get(CRServo.class, "intake_servo2");
       //  intakePivot.setPower(ZERO_POWER);
@@ -51,8 +54,8 @@ public class Driving extends OpMode
         rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        armBase.setDirection(DcMotor.Direction.FORWARD);
-        armPivot.setDirection(DcMotor.Direction.FORWARD);
+        lowerArmMotor.setDirection(DcMotor.Direction.FORWARD);
+        middleArmMotor.setDirection(DcMotor.Direction.FORWARD);
         liftMotor.setDirection (DcMotor.Direction.REVERSE);
 
 //Tells drivers that robot is ready//
@@ -72,9 +75,9 @@ public class Driving extends OpMode
         double leftBackPower;
         double rightBackPower;
         double liftPower;
-        double armPivotPower;
-        double armBasePower;
-        double armServoPower;
+        double lowerArmPower;
+        double middleArmPower;
+        double armFlipPower;
         double intakePower;
 //Drive, turning, and strafe//
         double drive = -gamepad1.left_stick_y;
@@ -83,8 +86,8 @@ public class Driving extends OpMode
         double liftUp = gamepad1.left_trigger;
         double liftDown = gamepad1.right_trigger;
         double lowerArm = gamepad2.left_stick_y;
-        double upperArm = gamepad2.right_stick_y;
-
+        double middleArm = gamepad2.right_stick_y;
+        int half = 2;
 
 
 //        double driveTurn = -gamepad1.left_stick_y + gamepad1.right_stick_x;
@@ -92,8 +95,8 @@ public class Driving extends OpMode
         rightFrontPower = Range.clip(drive - turn - strafe, -1.0, 1.0);
         leftBackPower = Range.clip(drive + turn - strafe, -1.0, 1.0);
         rightBackPower = Range.clip(drive - turn + strafe, -1.0, 1.0);
-        armBasePower = Range.clip(upperArm, -1.0, 1.0);
-        armPivotPower = Range.clip (lowerArm, -1.0, 1.0);
+        lowerArmPower = Range.clip(lowerArm / 2, -1.0, 1.0);
+        middleArmPower = Range.clip (middleArm / 2, -1.0, 1.0);
 
 
 
@@ -131,34 +134,49 @@ public class Driving extends OpMode
 
         // Activating intake and lift//
         if (gamepad2.a)intake.setPower(1.0);
-       // else intakePivot.setPower(0.0);
+        else if (gamepad2.b)intake.setPower(-1.0);
+        else intake.setPower(0.0);
+
         if (gamepad1.left_trigger>0)liftMotor.setPower(-1.0);
         else liftMotor.setPower (0.0);
         if (gamepad1.right_trigger>0)liftMotor.setPower(1.0);
         else liftMotor.setPower(0.0);
 
+        /*
+        if (gamepad2.x) {
+            lowerArmPower = lowerArmPower / 2;
+            middleArmPower = middleArmPower / 2;
+        }
+        else {
+            lowerArmPower = lowerArmPower;
+            middleArmPower = middleArmPower;
+        }
+        */
         if(gamepad2.right_trigger>0){
-            IntakePivotPower+= INTAKE_PIVOT_SPEED;}
+            IntakeFlipPower+= INTAKE_PIVOT_SPEED;}
             else if (gamepad2.left_trigger>0){
-            IntakePivotPower -= INTAKE_PIVOT_SPEED;
+            IntakeFlipPower -= INTAKE_PIVOT_SPEED;
         }
-        else IntakePivotPower = ZERO_POWER;
+        else IntakeFlipPower = ZERO_POWER;
+
         if(gamepad2.right_trigger>0){
-            IntakePivotPower+= INTAKE_PIVOT_SPEED;}
+            IntakeFlipPower += INTAKE_PIVOT_SPEED;}
         else if (gamepad2.left_trigger>0){
-            IntakePivotPower -= INTAKE_PIVOT_SPEED;
+            IntakeFlipPower -= INTAKE_PIVOT_SPEED;
         }
-        else IntakePivotPower =ZERO_POWER;
-        IntakePivotPower = Range.clip(IntakePivotPower, MIN_POWER, MAX_POWER);
-       // intakePivot.setPower(IntakePivotPower);
-        //intakePivot2.setPower(IntakePivotPower);
+        else IntakeFlipPower =ZERO_POWER;
+
+        IntakeFlipPower = Range.clip(IntakeFlipPower, MIN_POWER, MAX_POWER);
+
+        intake_flip.setPower(IntakeFlipPower);
 //Setting the power of the motor//
         leftFrontDrive.setPower(leftFrontPower);
         rightFrontDrive.setPower(rightFrontPower);
         leftBackDrive.setPower(leftBackPower);
         rightBackDrive.setPower(rightBackPower);
-        armBase.setPower(armBasePower);
-        armPivot.setPower(armPivotPower);
+        lowerArmMotor.setPower(lowerArmPower + 0);
+        middleArmMotor.setPower(middleArmPower + 0);
+
         telemetry.addData("status", "loop 2");
     }
     //Stop the robot//
@@ -168,6 +186,6 @@ public class Driving extends OpMode
         rightFrontDrive.setPower(0);
         leftBackDrive.setPower(0);
         rightBackDrive.setPower(0);
-        armBase.setPower(0);
-        armPivot.setPower(0);}
+        lowerArmMotor.setPower(0);
+        middleArmMotor.setPower(0);}
 }
