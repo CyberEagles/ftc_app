@@ -43,11 +43,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 /**
-Basic autonomous */
+ Basic autonomous */
 
-@Autonomous(name="Close to Depot")
+@Autonomous(name="Close 2 Crater")
 
-public class FinalAutonomous extends LinearOpMode {
+public class Close2Crater extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -108,22 +108,40 @@ public class FinalAutonomous extends LinearOpMode {
         StrafeRight(0);
         sleep (450);
         RotateTime(-1, 1200);
-        DriveForwardTime(-1,1700);
-        // In Depot//
-        DriveForwardTime(1,200);
+        DriveForwardTime(-1,550);
+        DriveForward(0);
+        DriveForwardTime(1,250);
+        DriveForward(0);
+        RotateTime(1, 1200);
+        Rotation(0);
+        DriveForwardTime(1,1100);
+        DriveForward(0);
+        RotateTime(-1,1000);
+        DriveForwardTime(1,500);
+        DriveForward(0);
+
+/**        DriveForwardTime(1,200);
         DriveForward(0);
         RotateTime(-1,1200);
         sleep(500);
-        teamMarker.setPower(0.4);
+        teamMarker.setPower(0.2);
         sleep(300);
-        StrafeRightTime(-1,500);
+        StrafeRightTime(-1, 500);
         StrafeRight(0);
         sleep(1000);
-
         RotateTime(-1,800);
         Rotation(0);
         sleep(500);
-        DriveForwardTime(-1, 300);
+        ParkTime(1,500);
+
+        teamMarker.setPower(0);
+
+        StrafeRightTime(-1, 300);
+        StrafeRight(0);
+        DriveForwardTime(-1,2000);
+
+*/
+        /*DriveForwardTime(-1, 300);
         DriveForward(0);
         RotateTime(1, 100);
         Rotation(0);
@@ -131,7 +149,7 @@ public class FinalAutonomous extends LinearOpMode {
         DriveForward(0);
         ParkTime(1,500);
         RotateTime(1,100);
-        DriveForwardTime(-1, 625);
+        DriveForwardTime(-1, 750);*/
 
         /*
         RotateTime(1, 100);
@@ -141,7 +159,7 @@ public class FinalAutonomous extends LinearOpMode {
 //        MarkerDropTime(1, 500);
         //Straighten out on wall
         //StrafeRightTime(1,500);
-       // StrafeRight(0);
+        // StrafeRight(0);
         //DriveForwardTime(1,3000);
         //DriveForward(0);
 
@@ -181,9 +199,9 @@ public class FinalAutonomous extends LinearOpMode {
     public void LowerDown(double power) {
         liftMotor.setPower(-power);
     }
-   public void DriveForward(double power) {
+    public void DriveForward(double power) {
         leftFrontDrive.setPower(power);
-       leftBackDrive.setPower(-power);
+        leftBackDrive.setPower(-power);
         rightBackDrive.setPower(power);
         rightFrontDrive.setPower(-power);
     }
