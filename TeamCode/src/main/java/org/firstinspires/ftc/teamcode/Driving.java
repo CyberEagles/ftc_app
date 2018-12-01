@@ -139,21 +139,25 @@ public class Driving extends OpMode
         else if (gamepad2.b)intake.setPower(-1.0);
         else intake.setPower(0.0);
 
-        if (gamepad1.left_trigger>0)liftMotor.setPower(-1.0);
+        if (gamepad1.right_trigger>0)liftMotor.setPower(-1.0);
         else liftMotor.setPower (0.0);
-        if (gamepad1.right_trigger>0)liftMotor.setPower(1.0);
+        if (gamepad1.left_trigger>0)liftMotor.setPower(1.0);
         else liftMotor.setPower(0.0);
 
-        /*
+
         if (gamepad2.x) {
-            lowerArmPower = lowerArmPower / 2;
-            middleArmPower = middleArmPower / 2;
+            rightFrontPower = rightFrontPower / 2;
+            rightBackPower = rightBackPower / 2;
+            leftFrontPower = leftFrontPower / 2;
+            leftBackPower = leftBackPower / 2;
         }
         else {
-            lowerArmPower = lowerArmPower;
-            middleArmPower = middleArmPower;
+            leftBackPower = leftBackPower;
+            leftFrontPower = leftFrontPower;
+            rightBackPower = rightBackPower;
+            rightFrontPower = rightFrontPower;
         }
-        */
+
         if(gamepad2.right_trigger>0){
             IntakeFlipPower+= INTAKE_PIVOT_SPEED;}
             else if (gamepad2.left_trigger>0){

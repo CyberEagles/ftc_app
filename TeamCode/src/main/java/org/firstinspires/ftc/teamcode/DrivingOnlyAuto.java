@@ -45,7 +45,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  Basic autonomous */
 
-@Autonomous(name="Driving Only Auto Test")
+@Autonomous(name="Driving Only Auto Test. WITHOUT LIFT")
 
 public class DrivingOnlyAuto extends LinearOpMode {
 
@@ -112,7 +112,7 @@ public class DrivingOnlyAuto extends LinearOpMode {
 //        LowerDownTime (-1, 1700);
 //        LowerDown (0);
 //        sleep(500);
-        DriveForwardTime(-1,50);
+        DriveForwardTime(1,50);
         DriveForward(0);
         sleep(1000);
         StrafeRightTime(-1,300);

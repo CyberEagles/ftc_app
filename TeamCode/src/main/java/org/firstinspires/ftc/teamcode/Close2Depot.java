@@ -43,11 +43,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 /**
- Basic autonomous */
+Basic autonomous */
 
-@Autonomous(name="Close to Depot   READY")
+@Autonomous(name="Close 2 Depot")
 
-public class CloseToDepot extends LinearOpMode {
+public class Close2Depot extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -61,11 +61,11 @@ public class CloseToDepot extends LinearOpMode {
 
     public void main() throws InterruptedException {
         //initialize motors
-        leftFrontDrive = hardwareMap.dcMotor.get("left_front");
-        rightFrontDrive = hardwareMap.dcMotor.get("right_front");
-        leftBackDrive = hardwareMap.dcMotor.get("left_back");
-        rightBackDrive = hardwareMap.dcMotor.get("right_back");
-        liftMotor = hardwareMap.dcMotor.get("lift_motor");
+        leftFrontDrive = hardwareMap.dcMotor.get("motorLeftFront");
+        rightFrontDrive = hardwareMap.dcMotor.get("motorRightFront");
+        leftBackDrive = hardwareMap.dcMotor.get("motorLeftBack");
+        rightBackDrive = hardwareMap.dcMotor.get("motorRightBack");
+        liftMotor = hardwareMap.dcMotor.get("liftMotor");
         teamMarker = hardwareMap.crservo.get("team_marker");
         //    leftFrontDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
         //    rightFrontDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
@@ -149,7 +149,7 @@ public class CloseToDepot extends LinearOpMode {
 //        MarkerDropTime(1, 500);
         //Straighten out on wall
         //StrafeRightTime(1,500);
-        // StrafeRight(0);
+       // StrafeRight(0);
         //DriveForwardTime(1,3000);
         //DriveForward(0);
 
@@ -189,9 +189,9 @@ public class CloseToDepot extends LinearOpMode {
     public void LowerDown(double power) {
         liftMotor.setPower(-power);
     }
-    public void DriveForward(double power) {
+   public void DriveForward(double power) {
         leftFrontDrive.setPower(power);
-        leftBackDrive.setPower(-power);
+       leftBackDrive.setPower(-power);
         rightBackDrive.setPower(power);
         rightFrontDrive.setPower(-power);
     }

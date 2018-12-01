@@ -45,7 +45,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  Basic autonomous */
 
-@Autonomous(name="Close 2 Crater")
+@Autonomous(name="Close 2 Crater Do Not Use")
 
 public class Close2Crater extends LinearOpMode {
 
@@ -98,7 +98,7 @@ public class Close2Crater extends LinearOpMode {
         waitForStart();
         runtime.reset();
 //what it does
-        LowerDownTime (-1, 1700);
+        LowerDownTime (1, 2950);
         LowerDown (0);
         sleep(500);
         DriveForwardTime(-1,50);
