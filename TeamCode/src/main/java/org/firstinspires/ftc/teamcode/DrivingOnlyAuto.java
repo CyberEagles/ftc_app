@@ -109,6 +109,16 @@ public class DrivingOnlyAuto extends LinearOpMode {
         sleep (450);
         RotateTime(-1, 1200);
         */
+//        LowerDownTime (-1, 1700);
+//        LowerDown (0);
+//        sleep(500);
+        DriveForwardTime(-1,50);
+        DriveForward(0);
+        sleep(1000);
+        StrafeRightTime(-1,300);
+        StrafeRight(0);
+        sleep (450);
+        RotateTime(-1, 1200);
         DriveForwardTime(-1,1700);
         // In Depot//
         DriveForwardTime(1,200);
