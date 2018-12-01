@@ -20,7 +20,8 @@ public class Driving extends OpMode
     private DcMotor liftMotor = null;
     public DcMotor lowerArmMotor = null;
     private DcMotor middleArmMotor = null;
-    private CRServo intake_flip = null;
+    private CRServo intake_flip1 = null;
+    private CRServo intake_flip2 = null;
     private DcMotor intake = null;
   //  public CRServo intakePivot;
   //  public CRServo intakePivot2;
@@ -44,7 +45,8 @@ public class Driving extends OpMode
         lowerArmMotor = hardwareMap.get (DcMotor.class, "lower_arm");
         middleArmMotor = hardwareMap.get (DcMotor.class, "middle_arm");
         intake = hardwareMap.get(DcMotor.class, "intake_motor");
-        intake_flip = hardwareMap.crservo.get("intake_flip");
+        intake_flip1 = hardwareMap.crservo.get("intake_flip");
+        intake_flip2 = hardwareMap.crservo.get("intake_flip2");
         //intakePivot = hardwareMap.get (CRServo.class, "intake_servo");
         //intakePivot2 = hardwareMap.get(CRServo.class, "intake_servo2");
       //  intakePivot.setPower(ZERO_POWER);
@@ -166,9 +168,17 @@ public class Driving extends OpMode
         }
         else IntakeFlipPower =ZERO_POWER;
 
+        if(gamepad2.y) {
+        middleArmPower = middleArmPower * 1.5;
+        }
+        else {
+        middleArmPower = middleArmPower;
+        }
+
         IntakeFlipPower = Range.clip(IntakeFlipPower, MIN_POWER, MAX_POWER);
 
-        intake_flip.setPower(IntakeFlipPower);
+        intake_flip2.setPower(-IntakeFlipPower);
+        intake_flip1.setPower(IntakeFlipPower);
 //Setting the power of the motor//
         leftFrontDrive.setPower(leftFrontPower);
         rightFrontDrive.setPower(rightFrontPower);
