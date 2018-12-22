@@ -153,6 +153,7 @@ public class ColorSensorTestAuto extends LinearOpMode {
             telemetry.addData("Blue ", sensorColor.blue());
             telemetry.addData("Hue", hsvValues[0]);
             telemetry.addData("Saturation", hsvValues[1]);
+            telemetry.addData("hsv 2", hsvValues[2]);
             // change the background color to match the color detected by the RGB sensor.
             // pass a reference to the hue, saturation, and value array as an argument
             // to the HSVToColor method.
@@ -172,14 +173,29 @@ public class ColorSensorTestAuto extends LinearOpMode {
                 }
             });
 
-            if ((hsvValues[1] > 0.17)) {
+            if ((hsvValues[1] < 0.17)) {
+                telemetry.addData("Color","Silver");
+                telemetry.update();
+            }
+            else if ((hsvValues[0] > 110)) {
+                    telemetry.addData("Color", "Floor");
+                    telemetry.update();
+            }
+            else {
                 telemetry.addData("Color", "Yellow");
                 telemetry.update();
+            }
+            /*if ((hsvValues[1] > 0.17)) {
+                telemetry.addData("Color", "Yellow");
+                telemetry.update();
+            }
+            else if ((hsvValues[0] > 110)) {
+                telemetry.addData("Color", "Floor");
             }
             else {
                 telemetry.addData("Color","Silver");
                 telemetry.update();
-            }
+            } */
 
 /**
             if ((hsvValues[1] > 0.17)) {
