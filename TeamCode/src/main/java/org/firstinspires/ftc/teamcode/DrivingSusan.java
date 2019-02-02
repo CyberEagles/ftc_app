@@ -129,14 +129,25 @@ public class DrivingSusan extends OpMode
 
 
         //lift motor
-        if (gamepad1.right_trigger>0)liftMotor.setPower(-1.0);
-        else liftMotor.setPower (0.0);
-        if (gamepad1.left_trigger>0)liftMotor.setPower(1.0);
+        if (gamepad1.right_trigger > 0 && gamepad1.left_trigger == 0)liftMotor.setPower(-1.0);
+        else if (gamepad1.left_trigger > 0 && gamepad1.right_trigger == 0)liftMotor.setPower(1.0);
+        else if (gamepad1.left_trigger == 0 && gamepad1.right_trigger == 0) liftMotor.setPower(0.0);
         else liftMotor.setPower(0.0);
-
+        /*
+        if (gamepad1.right_trigger > 0)liftMotor.setPower(-1.0);
+        else liftMotor.setPower (0.0);
+        if (gamepad1.left_trigger > 0)liftMotor.setPower(1.0);
+        else liftMotor.setPower(0.0);
+*/
 
         //intake flip
 
+        if (gamepad2.a && !gamepad2.b) intakeFlip.setPower(-0.8);
+        else if (!gamepad2.a && gamepad2.b) intakeFlip.setPower(0.3);
+        else if (gamepad2.a && gamepad2.b) intakeFlip.setPower(0);
+        else intakeFlip.setPower(0);
+
+        /*
         if (gamepad2.a) {
             intakeFlip.setPower(-1.0);
         }
@@ -150,7 +161,7 @@ public class DrivingSusan extends OpMode
         else {
             intakeFlip.setPower(0);
         }
-
+*/
 
         //intake spin
         if (gamepad2.right_trigger > 0 && gamepad2.left_trigger == 0) {
