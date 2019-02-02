@@ -182,15 +182,15 @@ public class ColorSensorTestAutoWorks extends LinearOpMode {
 //            ParkTime(1,100);
 //            DriveForwardTime(-1,100);
 //            ParkTime(1,100);
-            LowerDownTime(1, 2850);
+            LowerDownTime(1, 100);
             LowerDown(0);
-            sleep(500);
+            ParkTime(1,500);
             DriveForwardTime(-1, 50);
             DriveForward(0);
-            sleep(1000);
+            ParkTime(1,500);
             StrafeRightTime(-1, 300);
             StrafeRight(0);
-            sleep(450);
+            ParkTime(1,500);
             RotateTime(-1, 1000);
             DriveForwardTime(-1, 500);
 //line up to the right side sample
