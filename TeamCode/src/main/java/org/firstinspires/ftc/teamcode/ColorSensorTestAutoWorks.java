@@ -49,7 +49,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
-
+import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import java.util.Locale;
@@ -69,7 +69,7 @@ public class ColorSensorTestAutoWorks extends LinearOpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightBackDrive = null;
     private DcMotor liftMotor = null;
-    private CRServo teamMarker = null;
+    private Servo teamMarker = null;
     ColorSensor sensorColor;
     DistanceSensor sensorDistance;
 
@@ -80,7 +80,7 @@ public class ColorSensorTestAutoWorks extends LinearOpMode {
         leftBackDrive = hardwareMap.dcMotor.get("left_back");
         rightBackDrive = hardwareMap.dcMotor.get("right_back");
         liftMotor = hardwareMap.dcMotor.get("lift_motor");
-        teamMarker = hardwareMap.crservo.get("team_marker");
+        teamMarker = hardwareMap.servo.get("team_marker");
         //    leftFrontDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
         //    rightFrontDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
         //    leftBackDrive.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
@@ -105,7 +105,7 @@ public class ColorSensorTestAutoWorks extends LinearOpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back");
-        teamMarker = hardwareMap.crservo.get("team_marker");
+        teamMarker = hardwareMap.servo.get("team_marker");
         liftMotor = hardwareMap.get(DcMotor.class, "lift_motor");
 
         // get a reference to the color sensor.
@@ -182,37 +182,76 @@ public class ColorSensorTestAutoWorks extends LinearOpMode {
 //            ParkTime(1,100);
 //            DriveForwardTime(-1,100);
 //            ParkTime(1,100);
-            LowerDownTime(1, 100);
+            teamMarker.setPosition(-0.1);
+            LowerDownTime(1, 2900);
             LowerDown(0);
+            //lowering down
+            ParkTime(1,1000);
+            //wait after
+            DriveForwardTime(-1, 100);
+            DriveForward(0);
+            //move out from lander
             ParkTime(1,500);
-            DriveForwardTime(-1, 50);
+            StrafeRightTime(-1, 1200);
+            StrafeRight(0);
+            // strafe out from lander
+            ParkTime(1,500);
+            RotateTime(1, 800);
+            Rotation(0);
+            ParkTime(0, 500);
+            StrafeRightTime(1, 500);
+            StrafeRight(0);
+            ParkTime(1, 500);
+            DriveForwardTime(1, 900);
             DriveForward(0);
             ParkTime(1,500);
-            StrafeRightTime(-1, 300);
+            RotateTime(-1, 800);
+            Rotation(0);
+            ParkTime(1, 500);
+            teamMarker.setPosition(0.5);
+            //DriveForwardTime(-1, 500);
+            //turn towards minerals
+            RotateTime(-1, 400);
+            Rotation(0);
+            ParkTime(1,500);
+            DriveForwardTime(1, 100);
+            DriveForward(0);
+            ParkTime(1,500);
+            StrafeRightTime(-1,750);
             StrafeRight(0);
             ParkTime(1,500);
-            RotateTime(-1, 1000);
-            DriveForwardTime(-1, 500);
+            RotateTime(1,50);
+            Rotation(0);
+            ParkTime(1,500);
+            DriveForwardTime(1,2100);
+            DriveForward(0);
+            ParkTime(1, 30000);
 //line up to the right side sample
 //insert the proper numbers in when the build is done
 // these are approximate values based on last competition
 
-            if ((hsvValues[1] < 0.17)) {
+          /*  if ((hsvValues[1] < 0.17)) {
                 telemetry.addData("Color", "Silver");
                 telemetry.update();
-                StrafeRightTime(-1, 200);
-                ParkTime(1, 300);
+                DriveForwardTime(-1, 200);
+                ParkTime(1, 3000);
             } else if ((hsvValues[0] > 110)) {
                 telemetry.addData("Color", "Floor");
                 telemetry.update();
-                StrafeRightTime(1, 300);
-                ParkTime(1, 300);
+                DriveForwardTime(1, 300);
+                ParkTime(1, 3000);
             } else {
                 telemetry.addData("Color", "Yellow");
                 telemetry.update();
                 //do rest of auto here
-                RotateTime(1, 3000);
-                RotateTime(-1, 3000);
+                RotateTime(1, 500);
+                ParkTime(1, 500);
+                DriveForwardTime(1, 500);
+                ParkTime(1, 500);
+                RotateTime(1,500);
+                ParkTime(1,500);
+                // insert servo here
+                DriveForwardTime(1,500);
                 ParkTime(1, 30000); //to stop the robot on the crater
             }
 
@@ -231,8 +270,14 @@ public class ColorSensorTestAutoWorks extends LinearOpMode {
                 telemetry.addData("Color", "Yellow");
                 telemetry.update();
                 //do rest of auto here
-                RotateTime(1, 3000);
-                RotateTime(-1, 3000);
+                RotateTime(1, 500);
+                ParkTime(1, 500);
+                DriveForwardTime(1, 500);
+                ParkTime(1, 500);
+                RotateTime(1,500);
+                ParkTime(1,500);
+                // insert servo here
+                DriveForwardTime(1,500);
                 ParkTime(1, 30000); //to stop robot on the crater
             }
 
@@ -240,19 +285,25 @@ public class ColorSensorTestAutoWorks extends LinearOpMode {
             if ((hsvValues[1] < 0.17)) {
                 telemetry.addData("Color", "Silver");
                 telemetry.update();
-//do rest of auto even if silver detected
+                RotateTime(1, 500);
+                ParkTime(1, 500);
+                DriveForwardTime(1, 500);
+                ParkTime(1, 500);
+                RotateTime(1,500);
+                ParkTime(1,500);
+                // insert servo here
+                DriveForwardTime(1,500);
             } else if ((hsvValues[0] > 110)) {
                 telemetry.addData("Color", "Floor");
                 telemetry.update();
-//do rest of auto here even if floor detected
-            } else {
-                telemetry.addData("Color", "Yellow");
-                telemetry.update();
-                //do rest of auto here
-                RotateTime(1, 3000);
-                RotateTime(-1, 3000);
-                ParkTime(1, 30000); //to stop robot on the crater
-            }
+                RotateTime(1, 500);
+                ParkTime(1, 500);
+                DriveForwardTime(1, 500);
+                ParkTime(1, 500);
+                RotateTime(1,500);
+                ParkTime(1,500);
+                // insert servo here
+                DriveForwardTime(1,500); */            }
 
             ParkTime(1, 30000); //to stop robot on the crater and so auto does not loop.
 //            DriveForwardTime(1,100);
@@ -263,7 +314,7 @@ public class ColorSensorTestAutoWorks extends LinearOpMode {
         }
 
 
-    }
+
     double ParkTime (double power, long time) throws InterruptedException {
         Park(power);
         Thread.sleep(time);
@@ -302,8 +353,8 @@ public class ColorSensorTestAutoWorks extends LinearOpMode {
     }
     public void DriveForward(double power) {
         leftFrontDrive.setPower(power);
-        leftBackDrive.setPower(-power);
-        rightBackDrive.setPower(power);
+        leftBackDrive.setPower(power);
+        rightBackDrive.setPower(-power);
         rightFrontDrive.setPower(-power);
     }
     public void Rotation (double power){
@@ -313,13 +364,13 @@ public class ColorSensorTestAutoWorks extends LinearOpMode {
         rightBackDrive.setPower(power);
     }
     public void StrafeRight (double power) {
-        leftFrontDrive.setPower(power);
-        leftBackDrive.setPower(-power);
-        rightBackDrive.setPower(-power);
-        rightFrontDrive.setPower(power);
+        leftFrontDrive.setPower(-power);
+        leftBackDrive.setPower(power);
+        rightBackDrive.setPower(power);
+        rightFrontDrive.setPower(-power);
     }
     public void DropMarker (double power) {
-        teamMarker.setPower(-power);
+        teamMarker.setPosition( -power);
     }
 
     public void Park (double power){

@@ -119,6 +119,14 @@ public class Close2Crater extends LinearOpMode {
         RotateTime(-1,1000);
         DriveForwardTime(1,500);
         DriveForward(0);
+        RotateTime(-1,200);
+        Rotation(0);
+        DriveForwardTime(1, 500);
+        DriveForward(0);
+        teamMarker.setPower(0.2);
+        teamMarker.setPower(0);
+        DriveForwardTime(-1, 3000);
+        DriveForward(0);
 
 /**        DriveForwardTime(1,200);
         DriveForward(0);

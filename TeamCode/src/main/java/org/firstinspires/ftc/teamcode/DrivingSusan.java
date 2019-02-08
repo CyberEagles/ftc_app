@@ -147,6 +147,7 @@ public class DrivingSusan extends OpMode
         else if (gamepad2.a && gamepad2.b) intakeFlip.setPower(0);
         else intakeFlip.setPower(0);
 
+
         /*
         if (gamepad2.a) {
             intakeFlip.setPower(-1.0);
